@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'E:\Git\Python\douyin_assistant\main.ui'
+# Form implementation generated from reading ui file 'E:\Git\Python\douyinMaster\main.ui'
 #
 # Created by: PyQt5 UI code generator 5.10.1
 #
@@ -14,8 +14,13 @@ class Ui_Dialog(object):
         Dialog.resize(900, 600)
         Dialog.setMinimumSize(QtCore.QSize(640, 480))
         Dialog.setMaximumSize(QtCore.QSize(16777215, 16777215))
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(":/pic/pic/douyin.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
+        Dialog.setWindowIcon(icon)
         Dialog.setSizeGripEnabled(True)
+        Dialog.setModal(True)
         self.horizontalLayout = QtWidgets.QHBoxLayout(Dialog)
+        self.horizontalLayout.setSizeConstraint(QtWidgets.QLayout.SetDefaultConstraint)
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.tabWidget = QtWidgets.QTabWidget(Dialog)
         self.tabWidget.setObjectName("tabWidget")
@@ -176,6 +181,9 @@ class Ui_Dialog(object):
         self.label.setObjectName("label")
         self.verticalLayout.addWidget(self.label)
         self.textEdit_Print = QtWidgets.QTextEdit(Dialog)
+        self.textEdit_Print.setFocusPolicy(QtCore.Qt.WheelFocus)
+        self.textEdit_Print.setAcceptDrops(True)
+        self.textEdit_Print.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustToContents)
         self.textEdit_Print.setObjectName("textEdit_Print")
         self.verticalLayout.addWidget(self.textEdit_Print)
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
@@ -197,7 +205,7 @@ class Ui_Dialog(object):
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "抖音大师"))
+        Dialog.setWindowTitle(_translate("Dialog", "抖音大师 v1.0"))
         self.pushButton_DownloadEmulator.setText(_translate("Dialog", "下载模拟器"))
         self.pushButton_EmulatorConfig.setText(_translate("Dialog", "配置教程"))
         self.pushButton_DownloadDouyin.setText(_translate("Dialog", "下载抖音"))
@@ -245,6 +253,7 @@ class Ui_Dialog(object):
         self.pushButton_SaveLog.setText(_translate("Dialog", "保存日志"))
         self.pushButton_ClearLog.setText(_translate("Dialog", "清除"))
 
+import resource_rc
 
 if __name__ == "__main__":
     import sys
