@@ -10,6 +10,7 @@ import win32api
 import qrcode
 import random
 import string
+import uuid
 
 
 class AndroidCtrl():
@@ -53,6 +54,12 @@ class AndroidCtrl():
         salt = ''.join(sa)
         #print (salt)
         return salt
+
+    # 获取Mac地址
+    def GetMac(self):
+        node = uuid.getnode()
+        mac = uuid.UUID(int = node).hex[-12:]
+        return mac
 
     # 载入参数
     def LoadParameters(self, file):

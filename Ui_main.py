@@ -177,9 +177,17 @@ class Ui_Dialog(object):
         self.horizontalLayout.addWidget(self.tabWidget)
         self.verticalLayout = QtWidgets.QVBoxLayout()
         self.verticalLayout.setObjectName("verticalLayout")
-        self.label = QtWidgets.QLabel(Dialog)
-        self.label.setObjectName("label")
-        self.verticalLayout.addWidget(self.label)
+        self.gridLayout = QtWidgets.QGridLayout()
+        self.gridLayout.setObjectName("gridLayout")
+        self.label_9 = QtWidgets.QLabel(Dialog)
+        self.label_9.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.label_9.setObjectName("label_9")
+        self.gridLayout.addWidget(self.label_9, 0, 0, 1, 1)
+        self.label_OnlinePeople = QtWidgets.QLabel(Dialog)
+        self.label_OnlinePeople.setText("")
+        self.label_OnlinePeople.setObjectName("label_OnlinePeople")
+        self.gridLayout.addWidget(self.label_OnlinePeople, 0, 1, 1, 1)
+        self.verticalLayout.addLayout(self.gridLayout)
         self.textEdit_Print = QtWidgets.QTextEdit(Dialog)
         self.textEdit_Print.setFocusPolicy(QtCore.Qt.WheelFocus)
         self.textEdit_Print.setAcceptDrops(True)
@@ -205,7 +213,7 @@ class Ui_Dialog(object):
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "抖音大师 v1.0"))
+        Dialog.setWindowTitle(_translate("Dialog", "[耐诺网络]抖音大师 v1.0"))
         self.pushButton_DownloadEmulator.setText(_translate("Dialog", "下载模拟器"))
         self.pushButton_EmulatorConfig.setText(_translate("Dialog", "配置教程"))
         self.pushButton_DownloadDouyin.setText(_translate("Dialog", "下载抖音"))
@@ -249,7 +257,7 @@ class Ui_Dialog(object):
         self.pushButton_Run.setText(_translate("Dialog", "开始"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("Dialog", "一键操作"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _translate("Dialog", "帮助说明"))
-        self.label.setText(_translate("Dialog", "日志："))
+        self.label_9.setText(_translate("Dialog", "当前在线人数："))
         self.pushButton_SaveLog.setText(_translate("Dialog", "保存日志"))
         self.pushButton_ClearLog.setText(_translate("Dialog", "清除"))
 

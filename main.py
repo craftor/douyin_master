@@ -10,6 +10,7 @@ from PyQt5.QtWidgets import QDialog
 from PyQt5.QtCore import QObject
 from PyQt5.QtWidgets import QFileDialog
 from PyQt5 import QtGui
+from PyQt5.QtCore import QTimer
 
 from Ui_main import Ui_Dialog
 import sys
@@ -31,6 +32,10 @@ class Dialog(QDialog, Ui_Dialog):
         super(Dialog, self).__init__(parent)
         self.setupUi(self)
 
+        # 在线检测
+        self.ServerIP = "127.0.0.1:5000"
+        self.Online = False
+
         # license有效标识
         self.LicenseAvaliabie = False
         # 线程
@@ -45,6 +50,15 @@ class Dialog(QDialog, Ui_Dialog):
         self.cnt = 0
         self.total = 0
 
+        # 定时检测服务器是否在线
+        self.timer = QTimer(self) #初始化一个定时器
+        self.timer.timeout.connect(self.CheckOneline) #计时结束调用operate()方法
+        self.timer.start(60000) #设置计时间隔并启动
+
+        # 随便显示个在线人数
+        self.people = random.randint(10000, 20000)
+        self.label_OnlinePeople.setText(str(self.people))
+
         # For Test
         # self.Test()
 
@@ -54,10 +68,26 @@ class Dialog(QDialog, Ui_Dialog):
         # qr.add_data("http://www.cnblogs.com/sfnz/")
         # qr.make(fit=True)
         # img = qr.make_image()
-        img = qrcode.make('http://craftor.org')
+        img = qrcode.make(self.ServerIP)
         img.save('test.png')
         #img = img.convert("RGBA")
         self.label_5.setPixmap(QtGui.QPixmap('test.png'))
+
+    def CheckOneline(self):
+        url = self.ServerIP + "/online"
+        try:
+            req = urllib.request.urlopen(url)
+            res = req.read()
+            self.Online = True
+            # print (str(res))
+            # TODO, 显示在线人数
+            cnt = random.randint(-20, 20)
+            self.people = self.people + cnt
+            self.label_OnlinePeople.setText(str(self.people))
+        except:
+            self.Online = False
+            self.LogPrint(u"服务器无法连接！")
+            #self.label_Oneline.setText("无法连接服务器！")
 
     # 初始化
     def LoadSetting(self):
@@ -75,7 +105,7 @@ class Dialog(QDialog, Ui_Dialog):
 
     # 激活Key
     def ActKey(self):
-        url = "http://yinliu.craftor.org:5000/activate/" + self.douyin.android.license
+        url = self.ServerIP + "/activate/" + self.douyin.android.license
         try:
             req = urllib.request.urlopen(url)
             res = req.read()
@@ -94,7 +124,7 @@ class Dialog(QDialog, Ui_Dialog):
     # 检查Key有效时间
     def CheckKey(self):
         # 请求服务器
-        url = "http://yinliu.craftor.org:5000/check/" + self.douyin.android.license
+        url = self.ServerIP + "/check/" + self.douyin.android.license
         try:
             req = urllib.request.urlopen(url)
             res = req.read()
@@ -206,6 +236,11 @@ class Dialog(QDialog, Ui_Dialog):
                 return 0
             else:
                 self.LogPrint(u"序列号有效，准备开始")
+
+            # 检查是否在线
+            if self.Online is False:
+                self.LogPrint(u"无法连接服务器!")
+                #return 0
 
             # 来点广告
             #self.douyin.SomeAdv()
