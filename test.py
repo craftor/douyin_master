@@ -37,6 +37,9 @@ def Test():
     if client.client(text="首页").exists:
         print("首页")
 
+    if client.client(text="查看详情").exists:
+        print("查看详情")
+
     if client.client(text="消息").exists and client.client(text="我").exists:
         print ("主页")
 
@@ -65,5 +68,5 @@ def Test():
     # print (client.adb_CompareOne("jia.png"))
     # print (client.adb_CompareTwo("guan.png", "jia.png"))
 
-#Test()
+Test()
 

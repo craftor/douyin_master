@@ -51,9 +51,9 @@ class Dialog(QDialog, Ui_Dialog):
         self.total = 0
 
         # 定时检测服务器是否在线
-        # self.timer = QTimer(self)  # 初始化一个定时器
-        # self.timer.timeout.connect(self.CheckOnline)  # 计时结束调用operate()方法
-        # self.timer.start(180000)  # 设置计时间隔并启动
+        self.timer = QTimer(self)  # 初始化一个定时器
+        self.timer.timeout.connect(self.CheckOnline)  # 计时结束调用operate()方法
+        self.timer.start(180000)  # 设置计时间隔并启动
 
         # 随便显示个在线人数
         # self.people = random.randint(10000, 20000)
@@ -80,8 +80,8 @@ class Dialog(QDialog, Ui_Dialog):
         try:
             req = urllib.request.urlopen(url)
             res = req.read()
-            if res == "OK":
-                print("服务器在线")
+            if res == b"OK":
+                print("【服务器在线】")
                 self.Online = True
             else:
                 self.Online = False
@@ -107,17 +107,18 @@ class Dialog(QDialog, Ui_Dialog):
         self.checkBox_DownVideo.setChecked(False)
         self.checkBox_Cnt.setChecked(True)
         self.textEdit_Comment.setText("666")
+        self.textEdit_Message.setText("互粉，谢谢^_^")
         self.lineEdit_License.setText(self.douyin.android.license)
         self.lineEdit_PhoneNumber.setText(self.douyin.android.phone)
         self.LogPrint(u"初始化完成")
 
     # 激活Key
     def ActKey(self, license, phone):
-        if phone == '':
-            self.LogPrint(u"手机号不能为空！激活后手机号不可修改！")
+        if len(phone) != 11:
+            self.LogPrint(u"手机号不正确！激活后手机号不可修改！")
             return
         url = self.ServerIP + "/activate/" + license + "/" + phone
-        #print(url)
+        # print(url)
         try:
             req = urllib.request.urlopen(url)
             res = req.read()
@@ -177,12 +178,25 @@ class Dialog(QDialog, Ui_Dialog):
                 self.LogPrint(u"已关注，忽略")
             elif self.douyin.android.client(text="发消息").exists:
                 self.LogPrint(u"已关注，忽略")
+                self.Message()
             elif self.douyin.android.client(text="关注").exists:
                 self.LogPrint(u"未关注，关注一下")
                 self.douyin.android.adb_SingleClick(460, 119)
+                time.sleep(2)
+                self.Message()
 
             self.LogPrint(u"屏幕右滑")
             self.douyin.android.adb_RollingRightScreen()
+
+    # 发私信
+    def Message(self):
+        if self.checkBox_AutoMessage.isChecked():
+            len = self.comboBox_RandomStrLenMessage.currentIndex() + 4
+            msg = self.textEdit_Message.toPlainText()
+            if self.checkBox_InsertStrAfterMessage.isChecked():
+                msg += self.douyin.android.RandomStr(len)
+            time.sleep(1)
+            self.douyin.adb_Message(msg)
 
     # 下载视频
     def DownVideo(self):
@@ -195,19 +209,23 @@ class Dialog(QDialog, Ui_Dialog):
         if (self.checkBox_AutoComment.isChecked()):
             self.LogPrint(u"评论开始")
             # 评论中插入随机字符
-            len = self.comboBox_RandomStrLen.currentIndex() + 4
-            msg = self.textEdit_Comment.toPlainText() + self.douyin.android.RandomStr(len)
+            len = self.comboBox_RandomStrLenComment.currentIndex() + 4
+            msg = self.textEdit_Comment.toPlainText()
+            if self.checkBox_InsertStrAfterComment.isChecked():
+                msg += self.douyin.android.RandomStr(len)
             self.douyin.adb_Comment(msg)
             self.LogPrint(u"评论结束")
 
+    # 计数
     def Count(self):
-        # 计数
         self.cnt = self.cnt + 1
         self.total = self.total + 1
+        msg = u"【已看：" + str(self.cnt) + "个，累计：" + str(self.total) + "个】"
+        # self.label_Counter.setText(msg)
         if (self.checkBox_Cnt.isChecked()):
-            self.LogPrint(u"【已观看：" + str(self.cnt) +
-                          "个，累计观看：" + str(self.total) + "个】")
+            self.LogPrint(msg)
 
+    # 随机时间
     def RandomSleep(self):
         # 看一会儿视频
         if self.comboBox_WatchTime.currentIndex() == 0:
@@ -218,7 +236,7 @@ class Dialog(QDialog, Ui_Dialog):
             cnt = random.randint(10, 15)
         else:
             cnt = random.randint(5, 10)
-        self.LogPrint(u"看" + str(cnt) + u"秒视频")
+        self.LogPrint(u"再看" + str(cnt) + u"秒")
         time.sleep(cnt)
 
     # 线程
@@ -226,9 +244,13 @@ class Dialog(QDialog, Ui_Dialog):
         while(self.tRun):
 
             # 看5秒钟视频，判断是否为广告
+            self.LogPrint("先观察5秒")
             time.sleep(5)
             if (self.douyin.android.client(text="立即下载").exists):
-                self.LogPrint(u"好像是广告")
+                self.LogPrint(u"==========刷到广告了==========")
+                time.sleep(1)
+            elif (self.douyin.android.client(text="查看详情").exists):
+                self.LogPrint(u"==========刷到广告了==========")
                 time.sleep(1)
             else:
                 self.RandomSleep()
@@ -258,7 +280,7 @@ class Dialog(QDialog, Ui_Dialog):
             # self.pushButton_Run.setText(u"停止中。。。")
             self.tRun = False
             # self.myThread.join()
-            self.LogPrint(u"线程已经停止，等待本次循环结束")
+            self.LogPrint(u"*线程已经停止，等待本次循环结束")
             self.pushButton_Run.setText(u"开始")
             self.comboBox_WorkMode.setDisabled(False)
         else:
@@ -292,7 +314,8 @@ class Dialog(QDialog, Ui_Dialog):
                 self.LogPrint(u"启动完成")
 
             # 工作模式
-            if self.comboBox_WorkMode.currentIndex == 1:  # 只刷关注用户
+            if self.comboBox_WorkMode.currentIndex() == 1:  # 只刷关注用户
+                self.LogPrint(u"查看关注用户")
                 self.douyin.android.adb_SingleClick(175, 777)
                 time.sleep(1)
                 self.douyin.android.adb_SingleClick(140, 366)
@@ -301,7 +324,7 @@ class Dialog(QDialog, Ui_Dialog):
             self.cnt = 0
             self.myThread = Thread(target=self.douyinThread)
             self.myThread.start()
-            self.LogPrint(u"线程已经启动")
+            self.LogPrint(u"*线程已经启动")
             self.pushButton_Run.setText(u"停止")
 
     @pyqtSlot()
@@ -380,6 +403,14 @@ class Dialog(QDialog, Ui_Dialog):
         else:
             self.label_ResartDouyin.setText("")
 
+    @pyqtSlot(bool)
+    def on_checkBox_AutoAddFriend_clicked(self, checked):
+        if checked is False:
+            self.checkBox_AutoMessage.setDisabled(True)
+            self.checkBox_AutoMessage.setChecked(False)
+        else:
+            self.checkBox_AutoMessage.setDisabled(False)
+
     @pyqtSlot()
     def on_pushButton_DownloadDouyin_clicked(self):
         url = "http://s.toutiao.com/UsMYE/"
@@ -413,6 +444,5 @@ if __name__ == '__main__':
     from PyQt5.QtWidgets import QApplication
     app = QApplication(sys.argv)
     dlg = Dialog()
-    #dlg.showMinimized()
     dlg.show()
     sys.exit(app.exec_())
