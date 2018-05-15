@@ -1,3 +1,4 @@
+
 # -*- coding: utf-8 -*-
 
 import time
@@ -6,14 +7,16 @@ import string
 from AndroidCtrl import AndroidCtrl
 from DouYinCtrl import DouYinCtrl
 
+import uiautomator2 as u2
 
-#client = AndroidCtrl()
+client = AndroidCtrl()
 douyin = DouYinCtrl()
 
 #print (client.RandomStr(4))
 
-douyin.android.ui2_ConnectDevice()
-douyin.SomeAdv()
+#douyin.android.ui2_ConnectDevice()
+#douyin.SomeAdv()
+
 
 def Test():
     client.ui2_ConnectDevice()
@@ -21,16 +24,21 @@ def Test():
 
     #print (client.client.info)
 
-    client.client.app_stop(client.APP_DOUYIN)
-    client.client.app_start(client.APP_DOUYIN)
-
-    time.sleep(10)
+    #client.client.app_stop(client.APP_DOUYIN)
+    #client.client.app_start(client.APP_DOUYIN)
+    #time.sleep(10)
 
     if client.client(text="我").exists:
         print("我")
 
     if client.client(text="消息").exists:
         print("消息")
+
+    if client.client(text="首页").exists:
+        print("首页")
+
+    if client.client(text="消息").exists and client.client(text="我").exists:
+        print ("主页")
 
     if client.client(text="广告").exists:
         print("广告")
@@ -56,4 +64,6 @@ def Test():
     # print (client.adb_CompareOne("yiguan.png"))
     # print (client.adb_CompareOne("jia.png"))
     # print (client.adb_CompareTwo("guan.png", "jia.png"))
+
+#Test()
 

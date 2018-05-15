@@ -7,9 +7,7 @@ import subprocess
 import configparser
 import uiautomator2 as u2
 import win32api
-import qrcode
 import random
-import string
 import uuid
 
 
@@ -52,22 +50,35 @@ class AndroidCtrl():
         for i in range(len):
             sa.append(random.choice(seed))
         salt = ''.join(sa)
-        #print (salt)
+        # print (salt)
         return salt
 
     # 获取Mac地址
     def GetMac(self):
         node = uuid.getnode()
-        mac = uuid.UUID(int = node).hex[-12:]
+        mac = uuid.UUID(int=node).hex[-12:]
         return mac
 
     # 载入参数
     def LoadParameters(self, file):
+        try:
+            output = open(file, 'r')
+            output.close()
+        except Exception:
+            output = open(file, "w")
+            output.write("[parameters] \nlicense=0 \nphone=0 \nlocation = D:/Program Files/Nox/bin/Nox.exe")
+            output.close()
+            self.license = "0"
+            self.phone = "0"
+            self.location = "D:/Program Files/Nox/bin/Nox.exe"
+            return
         # 参数文件读取
         self.cfg = configparser.ConfigParser()
         self.cfg.read(file, encoding="utf-8")
         # 序列号
         self.license = self.cfg.get("parameters", "license")
+        # 手机号
+        self.phone = self.cfg.get("parameters", "phone")
         # 模拟器安装路径
         self.location = self.cfg.get("parameters", "location")
 
@@ -78,6 +89,7 @@ class AndroidCtrl():
         self.cfg.read(file, encoding="utf-8")
 
         self.cfg.set("parameters", "license", self.license)
+        self.cfg.set("parameters", "phone", self.phone)
         self.cfg.set("parameters", "location", self.location)
 
         with open(file, "w+") as f:
@@ -85,7 +97,7 @@ class AndroidCtrl():
 
     # 启动夜神模拟器
     def StartEmulator(self):
-        #args = '-resolution:800x600'
+        # args = '-resolution:800x600'
         args = ''
         win32api.ShellExecute(0, 'open', str(self.location), args, '', 0)
 
@@ -102,7 +114,7 @@ class AndroidCtrl():
             # set default element wait timeout (seconds)
             self.client.wait_timeout = 5.0
             return True
-        except:
+        except Exception:
             self.LogPrint(u"手机无法连接，请检查是否未初始化过")
             return False
 
@@ -115,7 +127,7 @@ class AndroidCtrl():
             # set default element wait timeout (seconds)
             self.client.wait_timeout = 5.0
             return True
-        except:
+        except Exception:
             self.LogPrint(u"手机无法连接，请检查是否未初始化过")
             return False
 
@@ -132,7 +144,7 @@ class AndroidCtrl():
         try:
             self.client.app_start(appName)
             return True
-        except:
+        except Exception:
             self.LogPrint(u"启动APP失败")
             return False
 
@@ -141,7 +153,7 @@ class AndroidCtrl():
         try:
             self.client.app_stop(appName)
             return True
-        except:
+        except Exception:
             self.LogPrint(u"关闭APP失败")
             return False
 
@@ -173,25 +185,19 @@ class AndroidCtrl():
         self.client.swipe(0.5, 0.2, 0.5, 0.8, 0.1)
 
     def ui2_RollingLeftScreen(self):
-        #self.client.swipe(0.9, 0.4, 0.1, 0.4, 0.2)
+        # self.client.swipe(0.9, 0.4, 0.1, 0.4, 0.2)
         pass
 
     def ui2_RollingRightScreen(self):
-        #self.client.swipe(0.1, 0.4, 0.9, 0.4, 0.2)
+        # self.client.swipe(0.1, 0.4, 0.9, 0.4, 0.2)
         pass
 
     # 打开连接
     def ui2_OpenURL(self, url):
-        # self.client.adb_shell(
-        #    'am start -n com.android.browser/com.android.browser.BrowserActivity')
-        # time.sleep(2)
         self.client.adb_shell(
             'am start -a android.intent.action.VIEW -d ', url)
 
     def adb_OpenURL(self, url):
-        # cmd = 'adb shell am start -n com.android.browser/com.android.browser.BrowserActivity'
-        # self.SendCommand(cmd)
-        # time.sleep(2)
         cmd = 'adb shell am start -a android.intent.action.VIEW -d ' + str(url)
         self.SendCommand(cmd)
         time.sleep(1)
@@ -230,25 +236,25 @@ class AndroidCtrl():
     # 上滑屏幕
     def adb_RollingUpScreen(self, step):
         self.adb_Rolling(int(self.width / 2), int(self.height / 2),
-                     int(self.width / 2), int(self.height / 2) - step)
+                         int(self.width / 2), int(self.height / 2) - step)
         time.sleep(1)
 
     # 下滑屏幕
     def adb_RollingDownScreen(self, step):
         self.adb_Rolling(int(self.width / 2), int(self.height / 2),
-                     int(self.width / 2), int(self.height / 2) + step)
+                         int(self.width / 2), int(self.height / 2) + step)
         time.sleep(1)
 
     # 左滑屏幕
     def adb_RollingLeftScreen(self):
-        self.adb_Rolling(int(self.width-20), int(self.height / 2),
-                     int(20), int(self.height / 2))
+        self.adb_Rolling(int(self.width - 20), int(self.height / 2),
+                         int(20), int(self.height / 2))
         time.sleep(1)
 
     # 右滑屏幕
     def adb_RollingRightScreen(self):
         self.adb_Rolling(int(20), int(self.height / 2),
-                     int(self.width-20), int(self.height / 2))
+                         int(self.width - 20), int(self.height / 2))
         time.sleep(1)
 
     # 截屏
