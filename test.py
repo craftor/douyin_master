@@ -10,7 +10,7 @@ from DouYinCtrl import DouYinCtrl
 import uiautomator2 as u2
 
 client = AndroidCtrl()
-douyin = DouYinCtrl()
+#douyin = DouYinCtrl()
 
 #print (client.RandomStr(4))
 
@@ -37,11 +37,14 @@ def Test():
     if client.client(text="首页").exists:
         print("首页")
 
+    if client.client(text="附近").exists:
+        print("附近")
+
+    if client.client(text="推荐").exists:
+        print("推荐")
+
     if client.client(text="查看详情").exists:
         print("查看详情")
-
-    if client.client(text="消息").exists and client.client(text="我").exists:
-        print ("主页")
 
     if client.client(text="广告").exists:
         print("广告")

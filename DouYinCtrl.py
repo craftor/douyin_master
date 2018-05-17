@@ -63,11 +63,7 @@ class DouYinCtrl():
     # 发评论
     def adb_Comment(self, text):
         self.android.adb_SingleClick(570, 545) # 点评论按钮
-        time.sleep(1)
         self.android.adb_SingleClick(290, 777) # 点评论框
-        time.sleep(1)
         self.android.client.send_keys(text)    # 输入内容
-        time.sleep(1)
         self.android.adb_SingleClick(581, 736) # 点发送
-        time.sleep(1)
         self.android.adb_SingleClick(280, 150) # 空白处点一下，关闭评论框

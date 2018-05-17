@@ -49,9 +49,6 @@ class Dialog(QDialog, Ui_Dialog):
         self.cnt = 0
         self.total = 0
 
-        # 官方购买license渠道暂未开放
-        self.pushButton_BuyKeys.setDisabled(True)
-
         # 定时检测服务器是否在线
         # self.timer = QTimer(self)  # 初始化一个定时器
         # self.timer.timeout.connect(self.CheckOnline)  # 计时结束调用operate()方法
@@ -129,11 +126,13 @@ class Dialog(QDialog, Ui_Dialog):
             self.LogPrint(u"服务器无法连接！")
             return
         # print (res)
+        msg = ''
         if res == b'1':
             msg = u"已激活！"
-        else:
+        elif res == b'-1':
+            msg = u"已激活，不要重复点击"
+        elif msg == b'0':
             msg = u"激活失败！"
-        self.label_LicenseAvaliable.setText(msg)
         self.LogPrint(msg)
 
     # 检查Key有效时间
@@ -171,9 +170,15 @@ class Dialog(QDialog, Ui_Dialog):
             self.LogPrint(u"点个赞")
             self.douyin.adb_AwesomeMe()
 
+    # 点击+号，加好友
+    def AddFriendDirect(self):
+        if self.checkBox_AutoAddFriend.isChecked():
+            self.LogPrint(u"加关注")
+            self.douyin.android.adb_SingleClick(569, 428)
+
     # 加好友
     def AddFriend(self):
-        if (self.checkBox_AutoAddFriend.isChecked()):
+        if self.checkBox_AutoAddFriend.isChecked():
 
             self.LogPrint(u"屏幕左滑")
             self.douyin.android.adb_RollingLeftScreen()
@@ -188,6 +193,23 @@ class Dialog(QDialog, Ui_Dialog):
                 self.douyin.android.adb_SingleClick(460, 119)
                 time.sleep(2)
                 self.Message()
+
+            self.LogPrint(u"屏幕右滑")
+            self.douyin.android.adb_RollingRightScreen()
+
+    def MessageV2(self):
+        if self.checkBox_AutoMessage.isChecked():
+            len = self.comboBox_RandomStrLenMessage.currentIndex() + 4
+            msg = self.textEdit_Message.toPlainText()
+            if self.checkBox_InsertStrAfterMessage.isChecked():
+                msg += self.douyin.android.RandomStr(len)
+            
+            self.LogPrint(u"屏幕左滑")
+            self.douyin.android.adb_RollingLeftScreen()
+            self.douyin.android.adb_SingleClick(512, 118)
+            self.douyin.android.adb_SingleClick(512, 118)
+
+            self.douyin.adb_Message(msg)
 
             self.LogPrint(u"屏幕右滑")
             self.douyin.android.adb_RollingRightScreen()
@@ -248,7 +270,7 @@ class Dialog(QDialog, Ui_Dialog):
         while(self.tRun and self.LicenseAvaliabie):
 
             # 看5秒钟视频，判断是否为广告
-            self.LogPrint("先观察5秒")
+            self.LogPrint("先观察5秒，判断是否为广告")
             time.sleep(5)
             if (self.douyin.android.client(text="立即下载").exists):
                 self.LogPrint(u"==========刷到广告了==========")
@@ -259,7 +281,8 @@ class Dialog(QDialog, Ui_Dialog):
             else:
                 self.RandomSleep()
                 self.AwsomeMe()
-                self.AddFriend()
+                self.AddFriendDirect()
+                self.MessageV2()
                 self.DownVideo()
                 self.Comment()
                 self.Count()
@@ -276,26 +299,23 @@ class Dialog(QDialog, Ui_Dialog):
         self.textEdit_Print.append(mystr)
 
     @pyqtSlot()
-    def on_pushButton_StopThread_clicked(self):
-        # self.pushButton_Run.setText(u"停止中。。。")
-        self.tRun = False
-        # self.myThread.join()
-        self.LogPrint(u"*线程已经停止，等待本次循环结束")
-        #self.pushButton_Run.setText(u"开始")
-        #self.comboBox_WorkMode.setDisabled(False)
-
-    @pyqtSlot()
     def on_pushButton_Run_clicked(self):
 
         self.CheckKey()
 
         if (self.tRun):
 
-            self.LogPrint("线程已经开始，不要重复点击")
+            #self.LogPrint("线程已经开始，不要重复点击")
+            # self.pushButton_Run.setText(u"停止中。。。")
+            self.tRun = False
+            # self.myThread.join()
+            self.LogPrint(u"*线程已经停止，等待本次循环结束")
+            self.pushButton_Run.setText(u"开始")
+            self.comboBox_WorkMode.setDisabled(False)
 
         else:
 
-            # self.comboBox_WorkMode.setDisabled(True)
+            self.comboBox_WorkMode.setDisabled(True)
             if self.douyin.android.ui2_ConnectDevice() is False:
                 self.LogPrint(u"无法连接模拟器！")
                 return
@@ -322,18 +342,28 @@ class Dialog(QDialog, Ui_Dialog):
                 self.LogPrint(u"启动完成")
 
             # 工作模式
-            if self.comboBox_WorkMode.currentIndex() == 1:  # 只刷关注用户
-                self.LogPrint(u"查看关注用户")
+            if self.comboBox_WorkMode.currentIndex() == 0:
+                pass
+            elif self.comboBox_WorkMode.currentIndex() == 1:  # 只刷关注用户
+                self.LogPrint(u"只刷关注用户模式")
                 self.douyin.android.adb_SingleClick(175, 777)
-                time.sleep(1)
+                time.sleep(2)
                 self.douyin.android.adb_SingleClick(140, 366)
+            elif self.comboBox_WorkMode.currentIndex() == 2:  # 只刷附近人
+                self.LogPrint(u"只刷附近用户模式")
+                self.douyin.android.adb_SingleClick(52, 777)
+                time.sleep(2)
+                self.douyin.android.adb_SingleClick(327, 60)
+                time.sleep(2)
+                self.douyin.android.adb_SingleClick(136, 237)
+
 
             self.tRun = True
             self.cnt = 0
             self.myThread = Thread(target=self.douyinThread)
             self.myThread.start()
             self.LogPrint(u"*线程已经启动")
-            #self.pushButton_Run.setText(u"停止")
+            self.pushButton_Run.setText(u"停止")
 
     @pyqtSlot()
     def on_pushButton_InitDevice_clicked(self):
@@ -427,23 +457,31 @@ class Dialog(QDialog, Ui_Dialog):
 
     @pyqtSlot(int)
     def on_comboBox_WorkMode_currentIndexChanged(self, index):
-        if index == 1:
-            self.checkBox_AutoAddFriend.setChecked(False)
-            self.checkBox_AutoAddFriend.setDisabled(True)
-            self.checkBox_RestartDouyin.setChecked(True)
-            self.checkBox_RestartDouyin.setDisabled(True)
-        else:
+        if index == 0:
+            self.LogPrint(u"【默认模式】")
             self.checkBox_AutoAddFriend.setChecked(True)
             self.checkBox_AutoAddFriend.setDisabled(False)
             self.checkBox_RestartDouyin.setChecked(True)
             self.checkBox_RestartDouyin.setDisabled(False)
+        elif index == 1:
+            self.LogPrint(u"【只刷关注用户模式】")
+            self.checkBox_AutoAddFriend.setChecked(False)
+            self.checkBox_AutoAddFriend.setDisabled(True)
+            self.checkBox_RestartDouyin.setChecked(True)
+            self.checkBox_RestartDouyin.setDisabled(True)
+        elif index == 2:
+            self.LogPrint(u"【只刷附近用户模式】")
+            self.checkBox_RestartDouyin.setChecked(True)
+            self.checkBox_RestartDouyin.setDisabled(True)
+        else:
+            pass
 
     @pyqtSlot()
     def on_pushButton_ActKey_clicked(self):
         self.douyin.android.license = self.lineEdit_License.text()
         self.douyin.android.phone = self.lineEdit_PhoneNumber.text()
         self.ActKey(self.douyin.android.license, self.douyin.android.phone)
-        self.CheckKey()
+        #self.CheckKey()
         self.douyin.android.SaveParameters("configure.ini")
 
     @pyqtSlot()
