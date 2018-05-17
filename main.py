@@ -35,6 +35,9 @@ class Dialog(QDialog, Ui_Dialog):
         self.ServerIP = "http://yinliu.craftor.org:5000"
         self.Online = False
 
+        # 获取新闻
+        self.GetNews()
+
         # license有效标识
         self.LicenseAvaliabie = False
         # 线程
@@ -71,6 +74,13 @@ class Dialog(QDialog, Ui_Dialog):
         img.save('test.png')
         # img = img.convert("RGBA")
         self.label_5.setPixmap(QtGui.QPixmap('test.png'))
+
+    def GetNews(self):
+        url = "http://app.craftor.org/douyin.txt"
+        req = urllib.request.urlopen(url)
+        res = req.read()
+        news = str(res, encoding = "utf8")
+        self.textEdit_News.setText(news)
 
     def CheckOnline(self):
         macaddr = self.douyin.android.GetMac()
@@ -333,11 +343,17 @@ class Dialog(QDialog, Ui_Dialog):
             # 重新启动抖音
             if (self.checkBox_RestartDouyin.isChecked()):
                 self.LogPrint(u"正在重新启动抖音")
-                self.douyin.android.client.app_stop(
-                    self.douyin.android.APP_DOUYIN)
+                try:
+                    self.douyin.android.client.app_stop(self.douyin.android.APP_DOUYIN)
+                except Exception:
+                    self.LogPrint(u"关闭抖音失败，请尝试重新【初始化模拟器】")
+                    return
                 time.sleep(2)
-                self.douyin.android.client.app_start(
-                    self.douyin.android.APP_DOUYIN)
+                try:
+                    self.douyin.android.client.app_start(self.douyin.android.APP_DOUYIN)
+                except Exception:
+                    self.LogPrint(u"关闭抖音失败，请尝试重新【初始化模拟器】")
+                    return
                 time.sleep(10)
                 self.LogPrint(u"启动完成")
 

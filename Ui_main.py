@@ -85,8 +85,10 @@ class Ui_Dialog(object):
         self.lineEdit_PhoneNumber.setObjectName("lineEdit_PhoneNumber")
         self.gridLayout_3.addWidget(self.lineEdit_PhoneNumber, 4, 1, 1, 1)
         self.verticalLayout_2.addLayout(self.gridLayout_3)
-        spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_2.addItem(spacerItem)
+        self.textEdit_News = QtWidgets.QTextEdit(self.tab)
+        self.textEdit_News.setEnabled(True)
+        self.textEdit_News.setObjectName("textEdit_News")
+        self.verticalLayout_2.addWidget(self.textEdit_News)
         self.tabWidget.addTab(self.tab, "")
         self.tab_2 = QtWidgets.QWidget()
         self.tab_2.setObjectName("tab_2")
@@ -233,8 +235,8 @@ class Ui_Dialog(object):
         self.pushButton_SaveLog = QtWidgets.QPushButton(Dialog)
         self.pushButton_SaveLog.setObjectName("pushButton_SaveLog")
         self.horizontalLayout_2.addWidget(self.pushButton_SaveLog)
-        spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_2.addItem(spacerItem1)
+        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_2.addItem(spacerItem)
         self.pushButton_ClearLog = QtWidgets.QPushButton(Dialog)
         self.pushButton_ClearLog.setObjectName("pushButton_ClearLog")
         self.horizontalLayout_2.addWidget(self.pushButton_ClearLog)
@@ -242,7 +244,7 @@ class Ui_Dialog(object):
         self.horizontalLayout.addLayout(self.verticalLayout)
 
         self.retranslateUi(Dialog)
-        self.tabWidget.setCurrentIndex(1)
+        self.tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def retranslateUi(self, Dialog):
@@ -305,7 +307,7 @@ class Ui_Dialog(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">2、运行【安卓模拟器】，设置分辨率为800x600，并开启软键盘，然后重启</p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">3、在【安卓模拟器】的市场中搜索“抖音”，并进行安装；或在软件中点击【下载抖音】到Windows中，然后再拖拽到安卓模拟器中</p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">4、点击【初始化模拟器】，成功后模拟器中会弹出一个网页，表示安装成功；否则，尝试重启模拟器，再尝试点击</p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">5、初始化模拟器完成后，到【设置】中，将默认输入法设置为【FastInputIME】，否则无法实现评论和私信</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">5、初始化模拟器完成后，到【模拟器里的安卓系统中-&gt;设置】中（注意不是模拟器自身的设置），将默认输入法设置为【FastInputIME】，否则无法实现评论和私信</p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">刷抖音注意事项：</p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">1、每次间隔的时间尽量不要太短，建议10秒以上（目前还没有测到抖音封号的边界条件，所以尽量还是保守一点比较好）</p>\n"
