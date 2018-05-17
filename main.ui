@@ -52,7 +52,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -61,52 +61,7 @@
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
         <layout class="QGridLayout" name="gridLayout_3">
-         <item row="1" column="2">
-          <widget class="QPushButton" name="pushButton_ActKey">
-           <property name="text">
-            <string>激活</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QLabel" name="label_2">
-           <property name="text">
-            <string>手机号码</string>
-           </property>
-          </widget>
-         </item>
-         <item row="6" column="2">
-          <widget class="QPushButton" name="pushButton_EmulatorLocation">
-           <property name="text">
-            <string>路径设置</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="1">
-          <widget class="QLabel" name="label_LicenseAvaliable">
-           <property name="text">
-            <string/>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="1">
-          <widget class="QPushButton" name="pushButton_DownloadEmulator">
-           <property name="text">
-            <string>下载模拟器</string>
-           </property>
-          </widget>
-         </item>
-         <item row="5" column="1">
-          <widget class="QPushButton" name="pushButton_DownloadDouyin">
-           <property name="text">
-            <string>下载抖音</string>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="0">
+         <item row="6" column="0">
           <widget class="QLabel" name="label_20">
            <property name="text">
             <string>第一步</string>
@@ -116,21 +71,14 @@
            </property>
           </widget>
          </item>
-         <item row="6" column="1">
+         <item row="9" column="1">
           <widget class="QPushButton" name="pushButton_StartEmulator">
            <property name="text">
             <string>启动模拟器</string>
            </property>
           </widget>
          </item>
-         <item row="2" column="2">
-          <widget class="QPushButton" name="pushButton_LicenseCheck">
-           <property name="text">
-            <string>检查</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="0">
+         <item row="5" column="0">
           <widget class="QLabel" name="label_18">
            <property name="text">
             <string>有效期</string>
@@ -140,7 +88,89 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="1">
+         <item row="8" column="0">
+          <widget class="QLabel" name="label_21">
+           <property name="text">
+            <string>第二步</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="0">
+          <widget class="QLabel" name="label_2">
+           <property name="text">
+            <string>手机号码</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="2">
+          <widget class="QPushButton" name="pushButton_ActKey">
+           <property name="text">
+            <string>激活</string>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="1">
+          <widget class="QLabel" name="label_LicenseAvaliable">
+           <property name="text">
+            <string/>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="2">
+          <widget class="QPushButton" name="pushButton_LicenseCheck">
+           <property name="text">
+            <string>检查</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1">
+          <widget class="QLineEdit" name="lineEdit_PhoneNumber">
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="label_4">
+           <property name="text">
+            <string>序列号</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="1">
+          <widget class="QPushButton" name="pushButton_DownloadEmulator">
+           <property name="text">
+            <string>下载模拟器</string>
+           </property>
+          </widget>
+         </item>
+         <item row="9" column="0">
+          <widget class="QLabel" name="label_3">
+           <property name="text">
+            <string>第三步</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="9" column="2">
+          <widget class="QPushButton" name="pushButton_EmulatorLocation">
+           <property name="text">
+            <string>路径设置</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
           <widget class="QLineEdit" name="lineEdit_License">
            <property name="minimumSize">
             <size>
@@ -156,54 +186,24 @@
            </property>
           </widget>
          </item>
-         <item row="5" column="0">
-          <widget class="QLabel" name="label_21">
+         <item row="8" column="1">
+          <widget class="QPushButton" name="pushButton_DownloadDouyin">
            <property name="text">
-            <string>第二步</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
+            <string>下载抖音</string>
            </property>
           </widget>
          </item>
-         <item row="0" column="0">
-          <widget class="QLabel" name="label_4">
+         <item row="0" column="1">
+          <widget class="QPushButton" name="pushButton_VisitHome">
            <property name="text">
-            <string>序列号</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
+            <string>访问官方网站</string>
            </property>
           </widget>
          </item>
-         <item row="5" column="2">
-          <widget class="QPushButton" name="pushButton">
+         <item row="1" column="2">
+          <widget class="QPushButton" name="pushButton_BuyKeys">
            <property name="text">
-            <string>如何安装</string>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="2">
-          <widget class="QPushButton" name="pushButton_EmulatorConfig">
-           <property name="text">
-            <string>配置教程</string>
-           </property>
-          </widget>
-         </item>
-         <item row="6" column="0">
-          <widget class="QLabel" name="label_3">
-           <property name="text">
-            <string>第三步</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QLineEdit" name="lineEdit_PhoneNumber">
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
+            <string>官方渠道购买</string>
            </property>
           </widget>
          </item>
@@ -235,13 +235,6 @@
           <widget class="QCheckBox" name="checkBox_AutoMessage">
            <property name="text">
             <string>自动私信</string>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="2" colspan="2">
-          <widget class="QPushButton" name="pushButton_Run">
-           <property name="text">
-            <string>开始</string>
            </property>
           </widget>
          </item>
@@ -442,7 +435,7 @@
          <item row="12" column="2">
           <widget class="QLabel" name="label_8">
            <property name="text">
-            <string>内容（一行一条）：</string>
+            <string>内容：</string>
            </property>
           </widget>
          </item>
@@ -492,6 +485,20 @@
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="2">
+          <widget class="QPushButton" name="pushButton_Run">
+           <property name="text">
+            <string>开始</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="3">
+          <widget class="QPushButton" name="pushButton_StopThread">
+           <property name="text">
+            <string>停止</string>
            </property>
           </widget>
          </item>

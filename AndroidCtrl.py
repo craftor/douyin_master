@@ -14,6 +14,7 @@ import uuid
 class AndroidCtrl():
 
     def __init__(self):
+        
         # 截图文件名
         self.ScreenShotFileName = "Tmp01.png"
         self.ScreenShotDetected = "Tmp02.png"

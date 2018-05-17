@@ -18,7 +18,6 @@ import time
 from threading import Thread
 import random
 import webbrowser
-import qrcode
 import urllib.request
 
 from DouYinCtrl import DouYinCtrl
@@ -50,10 +49,13 @@ class Dialog(QDialog, Ui_Dialog):
         self.cnt = 0
         self.total = 0
 
+        # 官方购买license渠道暂未开放
+        self.pushButton_BuyKeys.setDisabled(True)
+
         # 定时检测服务器是否在线
-        self.timer = QTimer(self)  # 初始化一个定时器
-        self.timer.timeout.connect(self.CheckOnline)  # 计时结束调用operate()方法
-        self.timer.start(180000)  # 设置计时间隔并启动
+        # self.timer = QTimer(self)  # 初始化一个定时器
+        # self.timer.timeout.connect(self.CheckOnline)  # 计时结束调用operate()方法
+        # self.timer.start(180000)  # 设置计时间隔并启动
 
         # 随便显示个在线人数
         # self.people = random.randint(10000, 20000)
@@ -85,7 +87,7 @@ class Dialog(QDialog, Ui_Dialog):
                 self.Online = True
             else:
                 self.Online = False
-                print("多人登录或手机号与序列号不符！")
+                print("序列号异常！")
             # print (str(res))
             # TODO, 显示在线人数
             # cnt = random.randint(-20, 20)
@@ -150,6 +152,8 @@ class Dialog(QDialog, Ui_Dialog):
         if (lessTime is not None):
             if lessTime < 0:
                 msg = u"未激活，请先激活！"
+            elif lessTime == 0:
+                msg = u"序列号无效！"
             else:
                 msg = u"剩余" + str(lessTime) + u"天"
                 self.LicenseAvaliabie = True
@@ -241,7 +245,7 @@ class Dialog(QDialog, Ui_Dialog):
 
     # 线程
     def douyinThread(self):
-        while(self.tRun):
+        while(self.tRun and self.LicenseAvaliabie):
 
             # 看5秒钟视频，判断是否为广告
             self.LogPrint("先观察5秒")
@@ -272,20 +276,29 @@ class Dialog(QDialog, Ui_Dialog):
         self.textEdit_Print.append(mystr)
 
     @pyqtSlot()
+    def on_pushButton_StopThread_clicked(self):
+        # self.pushButton_Run.setText(u"停止中。。。")
+        self.tRun = False
+        # self.myThread.join()
+        self.LogPrint(u"*线程已经停止，等待本次循环结束")
+        #self.pushButton_Run.setText(u"开始")
+        #self.comboBox_WorkMode.setDisabled(False)
+
+    @pyqtSlot()
     def on_pushButton_Run_clicked(self):
 
         self.CheckKey()
 
         if (self.tRun):
-            # self.pushButton_Run.setText(u"停止中。。。")
-            self.tRun = False
-            # self.myThread.join()
-            self.LogPrint(u"*线程已经停止，等待本次循环结束")
-            self.pushButton_Run.setText(u"开始")
-            self.comboBox_WorkMode.setDisabled(False)
+
+            self.LogPrint("线程已经开始，不要重复点击")
+
         else:
-            self.comboBox_WorkMode.setDisabled(True)
-            self.douyin.android.ui2_ConnectDevice()
+
+            # self.comboBox_WorkMode.setDisabled(True)
+            if self.douyin.android.ui2_ConnectDevice() is False:
+                self.LogPrint(u"无法连接模拟器！")
+                return
 
             # 选检查Key是否有效
             if self.LicenseAvaliabie is False:
@@ -293,11 +306,6 @@ class Dialog(QDialog, Ui_Dialog):
                 return
             else:
                 self.LogPrint(u"序列号有效，准备开始")
-
-            # 检查是否在线
-            if self.Online is False:
-                self.LogPrint(u"无法连接服务器!")
-                # return 0
 
             # 来点广告
             # self.douyin.SomeAdv()
@@ -325,7 +333,7 @@ class Dialog(QDialog, Ui_Dialog):
             self.myThread = Thread(target=self.douyinThread)
             self.myThread.start()
             self.LogPrint(u"*线程已经启动")
-            self.pushButton_Run.setText(u"停止")
+            #self.pushButton_Run.setText(u"停止")
 
     @pyqtSlot()
     def on_pushButton_InitDevice_clicked(self):
@@ -380,9 +388,9 @@ class Dialog(QDialog, Ui_Dialog):
 
     @pyqtSlot()
     def on_pushButton_BuyKeys_clicked(self):
-        fileName = "pay.png"
-        self.LogPrint(u"请扫描二维码完成支付")
-        self.label_QRCode.setPixmap(QtGui.QPixmap(fileName))
+        #url = "http://www.mhsc1688.com/list/2ypUu"
+        url = "http://douyin.craftor.org"
+        webbrowser.open(url, new=0, autoraise=True)
 
     @pyqtSlot()
     def on_pushButton_DownloadEmulator_clicked(self):
@@ -438,6 +446,12 @@ class Dialog(QDialog, Ui_Dialog):
         self.CheckKey()
         self.douyin.android.SaveParameters("configure.ini")
 
+    @pyqtSlot()
+    def on_pushButton_VisitHome_clicked(self):
+        url = "http://douyin.craftor.org"
+        webbrowser.open(url, new=0, autoraise=True)
+
+
 
 if __name__ == '__main__':
 
@@ -446,3 +460,4 @@ if __name__ == '__main__':
     dlg = Dialog()
     dlg.show()
     sys.exit(app.exec_())
+    
