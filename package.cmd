@@ -1,4 +1,6 @@
-set folder=douyinMaster
+set version=V1.1
+
+set folder=douyinMaster%version%
 
 del /F /A /Q build
 del /F /A /Q dist
@@ -13,4 +15,4 @@ pyinstaller.exe -i logo.ico -F .\main.py
 copy dist\main.exe %folder%\douyinMaster.exe
 copy tools\* %folder%
 
-"C:\Program Files\7-Zip\7z.exe" a -t7z douyinMaster%date%.7z %folder%\
+"C:\Program Files\7-Zip\7z.exe" a -t7z %folder%(%date%).7z %folder%\

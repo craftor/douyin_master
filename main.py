@@ -52,6 +52,8 @@ class Dialog(QDialog, Ui_Dialog):
         self.cnt = 0
         self.total = 0
 
+        self.pushButton_BuyKeys.setDisabled(True)
+
         # 定时检测服务器是否在线
         # self.timer = QTimer(self)  # 初始化一个定时器
         # self.timer.timeout.connect(self.CheckOnline)  # 计时结束调用operate()方法
@@ -434,8 +436,8 @@ class Dialog(QDialog, Ui_Dialog):
 
     @pyqtSlot()
     def on_pushButton_BuyKeys_clicked(self):
-        #url = "http://www.mhsc1688.com/list/2ypUu"
-        url = "http://douyin.craftor.org"
+        url = "http://www.mhsc1688.com/list/2ypUu"
+        #url = "http://douyin.craftor.org"
         webbrowser.open(url, new=0, autoraise=True)
 
     @pyqtSlot()
@@ -514,4 +516,3 @@ if __name__ == '__main__':
     dlg = Dialog()
     dlg.show()
     sys.exit(app.exec_())
-    
