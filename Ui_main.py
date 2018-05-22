@@ -176,7 +176,6 @@ class Ui_Dialog(object):
         self.comboBox_CommentType = QtWidgets.QComboBox(self.tab_2)
         self.comboBox_CommentType.setObjectName("comboBox_CommentType")
         self.comboBox_CommentType.addItem("")
-        self.comboBox_CommentType.addItem("")
         self.gridLayout_2.addWidget(self.comboBox_CommentType, 12, 3, 1, 1)
         self.label_8 = QtWidgets.QLabel(self.tab_2)
         self.label_8.setObjectName("label_8")
@@ -252,7 +251,7 @@ class Ui_Dialog(object):
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "[耐诺网络]抖音大师 v1.1"))
+        Dialog.setWindowTitle(_translate("Dialog", "[耐诺网络]抖音大师 v1.2"))
         self.pushButton_StartEmulator.setText(_translate("Dialog", "启动模拟器"))
         self.label_2.setText(_translate("Dialog", "手机号码"))
         self.pushButton_VisitHome.setText(_translate("Dialog", "官方网站"))
@@ -291,9 +290,23 @@ class Ui_Dialog(object):
         self.pushButton_InitDevice.setText(_translate("Dialog", "初始化模拟器"))
         self.checkBox_RestartDouyin.setText(_translate("Dialog", "自动重启抖音"))
         self.checkBox_AutoAddFriend.setText(_translate("Dialog", "自动加好友"))
+        self.textEdit_Comment.setHtml(_translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'SimSun\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">太棒了！</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">666666</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">厉害了</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">人才啊</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">貌似会火</p></body></html>"))
         self.comboBox_CommentType.setItemText(0, _translate("Dialog", "随机"))
-        self.comboBox_CommentType.setItemText(1, _translate("Dialog", "顺序"))
         self.label_8.setText(_translate("Dialog", "内容："))
+        self.textEdit_Message.setHtml(_translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'SimSun\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">互粉谢谢^_^</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">加个关注呗~</p></body></html>"))
         self.checkBox_InsertStrAfterMessage.setText(_translate("Dialog", "结尾插入随机符长度"))
         self.comboBox_RandomStrLenMessage.setItemText(0, _translate("Dialog", "4"))
         self.comboBox_RandomStrLenMessage.setItemText(1, _translate("Dialog", "5"))

@@ -1,4 +1,4 @@
-set version=V1.1
+set version=V1.2
 
 set folder=douyinMaster%version%
 
@@ -12,7 +12,7 @@ if not exist %folder% (
 )
 
 pyinstaller.exe -i logo.ico -F .\main.py
-copy dist\main.exe %folder%\douyinMaster.exe
+copy dist\main.exe %folder%\douyinMaster%version%.exe
 copy tools\* %folder%
 
 "C:\Program Files\7-Zip\7z.exe" a -t7z %folder%(%date%).7z %folder%\

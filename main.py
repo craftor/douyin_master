@@ -19,6 +19,8 @@ from threading import Thread
 import random
 import webbrowser
 import urllib.request
+import markdown
+import codecs
 
 from DouYinCtrl import DouYinCtrl
 
@@ -52,7 +54,7 @@ class Dialog(QDialog, Ui_Dialog):
         self.cnt = 0
         self.total = 0
 
-        self.pushButton_BuyKeys.setDisabled(True)
+        #self.pushButton_BuyKeys.setDisabled(True)
 
         # 定时检测服务器是否在线
         # self.timer = QTimer(self)  # 初始化一个定时器
@@ -64,25 +66,25 @@ class Dialog(QDialog, Ui_Dialog):
         # self.label_OnlinePeople.setText(str(self.people))
 
         # For Test
-        # self.Test()
+        #self.Test()
 
     def Test(self):
-        # qr = qrcode.QRCode(
-        #     version=5, error_correction=qrcode.constants.ERROR_CORRECT_H, box_size=8, border=4)
-        # qr.add_data("http://www.cnblogs.com/sfnz/")
-        # qr.make(fit=True)
-        # img = qr.make_image()
-        img = qrcode.make(self.ServerIP)
-        img.save('test.png')
-        # img = img.convert("RGBA")
-        self.label_5.setPixmap(QtGui.QPixmap('test.png'))
+        input_file = codecs.open("test.md", mode="r", encoding="utf-8")
+        text = input_file.read()
+        html = markdown.markdown(text)
+        self.textEdit_News.setHtml(html)
 
     def GetNews(self):
         url = "http://app.craftor.org/douyin.txt"
+        #url = "https://douyin.craftor.org/2018/05/22/Latest_Version/"
         req = urllib.request.urlopen(url)
         res = req.read()
         news = str(res, encoding = "utf8")
-        self.textEdit_News.setText(news)
+        #self.textEdit_News.setHtml(news)
+        #input_file = codecs.open(res, mode="r", encoding="utf-8")
+        #text = input_file.read()
+        html = markdown.markdown(news)
+        self.textEdit_News.setHtml(html)
 
     def CheckOnline(self):
         macaddr = self.douyin.android.GetMac()
@@ -117,8 +119,8 @@ class Dialog(QDialog, Ui_Dialog):
         self.checkBox_AutoComment.setChecked(False)
         self.checkBox_DownVideo.setChecked(False)
         self.checkBox_Cnt.setChecked(True)
-        self.textEdit_Comment.setText("666")
-        self.textEdit_Message.setText("互粉，谢谢^_^")
+        #self.textEdit_Comment.setText("666")
+        #self.textEdit_Message.setText("互粉，谢谢^_^")
         self.lineEdit_License.setText(self.douyin.android.license)
         self.lineEdit_PhoneNumber.setText(self.douyin.android.phone)
         self.LogPrint(u"初始化完成")
@@ -231,10 +233,16 @@ class Dialog(QDialog, Ui_Dialog):
         if self.checkBox_AutoMessage.isChecked():
             len = self.comboBox_RandomStrLenMessage.currentIndex() + 4
             msg = self.textEdit_Message.toPlainText()
+            if self.comboBox_CommentType.currentIndex() == 0:  # 随机评论
+                cmt = msg.split()
+                RndCnt = random.randint(0, len(msg))
+                msg_single = cmt[RndCnt]
+            else:
+                pass
             if self.checkBox_InsertStrAfterMessage.isChecked():
-                msg += self.douyin.android.RandomStr(len)
+                msg_single += self.douyin.android.RandomStr(len)
             time.sleep(1)
-            self.douyin.adb_Message(msg)
+            self.douyin.adb_Message(msg_single)
 
     # 下载视频
     def DownVideo(self):
@@ -249,9 +257,15 @@ class Dialog(QDialog, Ui_Dialog):
             # 评论中插入随机字符
             len = self.comboBox_RandomStrLenComment.currentIndex() + 4
             msg = self.textEdit_Comment.toPlainText()
+            if self.comboBox_CommentType.currentIndex() == 0:  # 随机评论
+                cmt = msg.split()
+                RndCnt = random.randint(0, len(msg))
+                msg_single = cmt[RndCnt]
+            else:
+                pass
             if self.checkBox_InsertStrAfterComment.isChecked():
-                msg += self.douyin.android.RandomStr(len)
-            self.douyin.adb_Comment(msg)
+                msg_single += self.douyin.android.RandomStr(len)
+            self.douyin.adb_Comment(msg_single)
             self.LogPrint(u"评论结束")
 
     # 计数
@@ -436,8 +450,8 @@ class Dialog(QDialog, Ui_Dialog):
 
     @pyqtSlot()
     def on_pushButton_BuyKeys_clicked(self):
-        url = "http://www.mhsc1688.com/list/2ypUu"
-        #url = "http://douyin.craftor.org"
+        #url = "http://www.mhsc1688.com/list/2ypUu"
+        url = "http://keys.craftor.org"
         webbrowser.open(url, new=0, autoraise=True)
 
     @pyqtSlot()
@@ -510,7 +524,6 @@ class Dialog(QDialog, Ui_Dialog):
 
 
 if __name__ == '__main__':
-
     from PyQt5.QtWidgets import QApplication
     app = QApplication(sys.argv)
     dlg = Dialog()
