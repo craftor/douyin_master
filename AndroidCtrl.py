@@ -3,18 +3,17 @@ import datetime
 import time
 import cv2
 import numpy as np
-import subprocess
 import configparser
 import uiautomator2 as u2
 import win32api
 import random
 import uuid
+import os
 
 
 class AndroidCtrl():
 
     def __init__(self):
-        
         # 截图文件名
         self.ScreenShotFileName = "Tmp01.png"
         self.ScreenShotDetected = "Tmp02.png"
@@ -31,10 +30,30 @@ class AndroidCtrl():
         self.client = None
         # 读取参数文件
         self.LoadParameters("configure.ini")
+        # 设备列表
+        self.devices = []
+
+    # 获取设备列表
+    def GetDeviceList(self):
+        cmd = "adb devices"
+        result = self.SendCommand(cmd)
+        if (len(result) <= 1):
+            # print("没有找到设备")
+            pass
+        else:
+            # print(len(result))
+            for i in range(1, len(result) - 1):
+                tmp = result[i].split()
+                # print(tmp[0])
+                if (tmp is not None):
+                    self.devices.append(tmp[0])
+        return self.devices
 
     # 重新定向命令
     def SendCommand(self, command):
-        result = subprocess.call(command, shell=True)
+        # result = subprocess.Popen(command, shell=True)
+        result = os.popen(command).readlines()
+        # print(result)
         return result
 
     # 打印日志
@@ -67,7 +86,8 @@ class AndroidCtrl():
             output.close()
         except Exception:
             output = open(file, "w")
-            output.write("[parameters] \nlicense=0 \nphone=0 \nlocation = D:/Program Files/Nox/bin/Nox.exe")
+            output.write(
+                "[parameters] \nlicense=0 \nphone=0 \nlocation = D:/Program Files/Nox/bin/Nox.exe")
             output.close()
             self.license = "0"
             self.phone = "0"
@@ -104,12 +124,24 @@ class AndroidCtrl():
 
     # 使用ui2操作，第一次要初始化一下设备
     def ui2_InitDevice(self):
-        cmd = "python -m uiautomator2 init"
+        cmd = "tools init"
         self.SendCommand(cmd)
 
     def ui2_ConnectDeviceWiFi(self, ipaddr):
         try:
             self.client = u2.connect_wifi(ipaddr)
+            # set delay 1.5s after each UI click and click
+            self.client.click_post_delay = 1.0
+            # set default element wait timeout (seconds)
+            self.client.wait_timeout = 5.0
+            return True
+        except Exception:
+            self.LogPrint(u"手机无法连接，请检查是否未初始化过")
+            return False
+
+    def ui2_ConnectDeviceUSB(self, addr):
+        try:
+            self.client = u2.connect_usb(addr)
             # set delay 1.5s after each UI click and click
             self.client.click_post_delay = 1.0
             # set default element wait timeout (seconds)
@@ -136,8 +168,8 @@ class AndroidCtrl():
     def ui2_InstallAPP(self, appURL):
         self.client.app_install(appURL)
 
-    def adb_InstallAPP(self, appURL):
-        cmd = "adb install " + appURL
+    def adb_InstallAPP(self, appURL, device):
+        cmd = 'adb -s ' + str(device) + ' install ' + appURL
         self.SendCommand(cmd)
 
     # 启动APP
@@ -193,19 +225,14 @@ class AndroidCtrl():
         # self.client.swipe(0.1, 0.4, 0.9, 0.4, 0.2)
         pass
 
-    # 打开连接
-    def ui2_OpenURL(self, url):
-        self.client.adb_shell(
-            'am start -a android.intent.action.VIEW -d ', url)
-
-    def adb_OpenURL(self, url):
-        cmd = 'adb shell am start -a android.intent.action.VIEW -d ' + str(url)
+    def adb_OpenURL(self, url, device):
+        cmd = 'adb -s ' + str(device) + ' shell am start -a android.intent.action.VIEW -d ' + str(url)
         self.SendCommand(cmd)
         time.sleep(1)
 
     # 只能发英文和数字，不支持中文！
-    def adb_SendText(self, text):
-        cmd = "adb shell input text " + str(text)
+    def adb_SendText(self, text, device):
+        cmd = 'adb -s ' + str(device) + ' shell input text ' + str(text)
         self.SendCommand(cmd)
         time.sleep(1)
 
@@ -216,53 +243,57 @@ class AndroidCtrl():
         print(result)
 
     # 单击操作
-    def adb_SingleClick(self, x, y):
-        cmd = 'adb shell input tap ' + str(x) + ' ' + str(y)
+    def adb_SingleClick(self, x, y, device):
+        cmd = 'adb -s ' + str(device) + ' shell input tap ' + str(x) + ' ' + str(y)
         self.SendCommand(cmd)
         time.sleep(1)
 
     # 返回按钮
-    def adb_ClickReturn(self):
-        cmd = 'adb shell input keyevent 4'
+    def adb_ClickReturn(self, device):
+        cmd = 'adb -s ' + str(device) + ' shell input keyevent 4'
         self.SendCommand(cmd)
         time.sleep(1)
 
     # 滑动操作
-    def adb_Rolling(self, x1, y1, x2, y2):
-        cmd = 'adb shell input swipe ' + \
+    def adb_Rolling(self, x1, y1, x2, y2, device):
+        cmd = 'adb -s ' + str(device) + ' shell input swipe ' + \
             str(x1) + ' ' + str(y1) + ' ' + str(x2) + ' ' + str(y2)
         self.SendCommand(cmd)
         time.sleep(1)
 
     # 上滑屏幕
-    def adb_RollingUpScreen(self, step):
+    def adb_RollingUpScreen(self, step, device):
         self.adb_Rolling(int(self.width / 2), int(self.height / 2),
-                         int(self.width / 2), int(self.height / 2) - step)
+                         int(self.width / 2), int(self.height / 2) - step,
+                         device)
         time.sleep(1)
 
     # 下滑屏幕
-    def adb_RollingDownScreen(self, step):
+    def adb_RollingDownScreen(self, step, device):
         self.adb_Rolling(int(self.width / 2), int(self.height / 2),
-                         int(self.width / 2), int(self.height / 2) + step)
+                         int(self.width / 2), int(self.height / 2) + step,
+                         device)
         time.sleep(1)
 
     # 左滑屏幕
-    def adb_RollingLeftScreen(self):
+    def adb_RollingLeftScreen(self, device):
         self.adb_Rolling(int(self.width - 20), int(self.height / 2),
-                         int(20), int(self.height / 2))
+                         int(20), int(self.height / 2),
+                         device)
         time.sleep(1)
 
     # 右滑屏幕
-    def adb_RollingRightScreen(self):
+    def adb_RollingRightScreen(self, device):
         self.adb_Rolling(int(20), int(self.height / 2),
-                         int(self.width - 20), int(self.height / 2))
+                         int(self.width - 20), int(self.height / 2),
+                         device)
         time.sleep(1)
 
     # 截屏
-    def adb_PullScreenShot(self):
-        cmd = 'adb shell screencap -p /sdcard/' + self.ScreenShotFileName
+    def adb_PullScreenShot(self, device):
+        cmd = 'adb -s ' + str(device) + ' shell screencap -p /sdcard/' + self.ScreenShotFileName
         self.SendCommand(cmd)
-        cmd = 'adb pull /sdcard/' + self.ScreenShotFileName + ' .'
+        cmd = 'adb -s ' + str(device) + ' pull /sdcard/' + self.ScreenShotFileName + ' .'
         self.SendCommand(cmd)
 
     # 获取屏幕尺寸，非常重要

@@ -1,4 +1,4 @@
-set version=V1.2
+set version=V1.3
 
 set folder=douyinMaster%version%
 

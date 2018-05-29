@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>906</width>
-    <height>704</height>
+    <height>699</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -32,7 +32,7 @@
    <bool>true</bool>
   </property>
   <property name="windowTitle">
-   <string>[耐诺网络]抖音大师 v1.2</string>
+   <string>[耐诺网络]抖音大师 v1.3</string>
   </property>
   <property name="windowIcon">
    <iconset>
@@ -52,7 +52,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -197,6 +197,17 @@
          <property name="enabled">
           <bool>true</bool>
          </property>
+         <property name="html">
+          <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'SimSun'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:large; font-weight:600;&quot;&gt;官方消息&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:1; text-indent:0px;&quot;&gt;请认准官方网站为http://douyin.craftor.org&lt;/p&gt;
+&lt;p style=&quot; margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:large; font-weight:600;&quot;&gt;当前版本&lt;/span&gt;&lt;/p&gt;
+&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;v1.3   [2018-05-29]&lt;/li&gt;
+&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;支持多开&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
         </widget>
        </item>
       </layout>
@@ -208,14 +219,17 @@
       <layout class="QHBoxLayout" name="horizontalLayout_4">
        <item>
         <layout class="QGridLayout" name="gridLayout_2">
-         <item row="16" column="0">
-          <widget class="QCheckBox" name="checkBox_AutoMessage">
+         <item row="8" column="0">
+          <widget class="QLabel" name="label_5">
            <property name="text">
-            <string>自动私信</string>
+            <string>每段视频观看时间：</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
            </property>
           </widget>
          </item>
-         <item row="15" column="3">
+         <item row="17" column="3">
           <widget class="QComboBox" name="comboBox_RandomStrLenComment">
            <item>
             <property name="text">
@@ -244,47 +258,64 @@
            </item>
           </widget>
          </item>
-         <item row="4" column="2" colspan="2">
-          <widget class="QComboBox" name="comboBox_WorkMode">
-           <item>
-            <property name="text">
-             <string>默认模式</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>只刷关注用户</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>只刷附近用户</string>
-            </property>
-           </item>
-          </widget>
-         </item>
-         <item row="6" column="0">
-          <widget class="QLabel" name="label_5">
-           <property name="text">
-            <string>每段视频观看时间：</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="6" column="3">
-          <widget class="QLabel" name="label_6">
-           <property name="text">
-            <string>秒（尽量不要太短）</string>
-           </property>
-          </widget>
-         </item>
          <item row="18" column="0">
-          <widget class="QCheckBox" name="checkBox_Cnt">
+          <widget class="QCheckBox" name="checkBox_AutoMessage">
            <property name="text">
-            <string>显示计数</string>
+            <string>自动私信</string>
            </property>
+          </widget>
+         </item>
+         <item row="14" column="3">
+          <widget class="QComboBox" name="comboBox_CommentType">
+           <item>
+            <property name="text">
+             <string>随机</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="18" column="2" colspan="2">
+          <widget class="QTextEdit" name="textEdit_Message">
+           <property name="html">
+            <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'SimSun'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;互粉谢谢^_^&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;加个关注呗~&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+          </widget>
+         </item>
+         <item row="17" column="2">
+          <widget class="QCheckBox" name="checkBox_InsertStrAfterComment">
+           <property name="text">
+            <string>结尾插入随机符长度</string>
+           </property>
+          </widget>
+         </item>
+         <item row="8" column="2">
+          <widget class="QComboBox" name="comboBox_WatchTime">
+           <property name="layoutDirection">
+            <enum>Qt::LeftToRight</enum>
+           </property>
+           <property name="currentText">
+            <string>0-5（秒）</string>
+           </property>
+           <item>
+            <property name="text">
+             <string>0-5（秒）</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>5-10（秒）</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>10-15（秒）</string>
+            </property>
+           </item>
           </widget>
          </item>
          <item row="4" column="0">
@@ -297,107 +328,7 @@
            </property>
           </widget>
          </item>
-         <item row="15" column="2">
-          <widget class="QCheckBox" name="checkBox_InsertStrAfterComment">
-           <property name="text">
-            <string>结尾插入随机符长度</string>
-           </property>
-          </widget>
-         </item>
-         <item row="6" column="2">
-          <widget class="QComboBox" name="comboBox_WatchTime">
-           <property name="layoutDirection">
-            <enum>Qt::LeftToRight</enum>
-           </property>
-           <property name="currentText">
-            <string>0-5</string>
-           </property>
-           <item>
-            <property name="text">
-             <string>0-5</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>5-10</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>10-15</string>
-            </property>
-           </item>
-          </widget>
-         </item>
-         <item row="10" column="0">
-          <widget class="QCheckBox" name="checkBox_DownVideo">
-           <property name="text">
-            <string>自动下载视频</string>
-           </property>
-          </widget>
-         </item>
-         <item row="8" column="0">
-          <widget class="QCheckBox" name="checkBox_AutoAwesome">
-           <property name="text">
-            <string>自动点赞</string>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="5" column="2" colspan="2">
-          <widget class="QLabel" name="label_ResartDouyin">
-           <property name="text">
-            <string/>
-           </property>
-          </widget>
-         </item>
-         <item row="13" column="0">
-          <widget class="QCheckBox" name="checkBox_AutoComment">
-           <property name="text">
-            <string>自动评论</string>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="0">
-          <widget class="QPushButton" name="pushButton_InitDevice">
-           <property name="text">
-            <string>初始化模拟器</string>
-           </property>
-          </widget>
-         </item>
-         <item row="10" column="2" colspan="2">
-          <widget class="QLabel" name="label_DownVideo">
-           <property name="text">
-            <string/>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="5" column="0">
-          <widget class="QCheckBox" name="checkBox_RestartDouyin">
-           <property name="text">
-            <string>自动重启抖音</string>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="9" column="0">
-          <widget class="QCheckBox" name="checkBox_AutoAddFriend">
-           <property name="text">
-            <string>自动加好友</string>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="13" column="2" colspan="2">
+         <item row="15" column="2" colspan="2">
           <widget class="QTextEdit" name="textEdit_Comment">
            <property name="html">
             <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -412,42 +343,7 @@ p, li { white-space: pre-wrap; }
            </property>
           </widget>
          </item>
-         <item row="12" column="3">
-          <widget class="QComboBox" name="comboBox_CommentType">
-           <item>
-            <property name="text">
-             <string>随机</string>
-            </property>
-           </item>
-          </widget>
-         </item>
-         <item row="12" column="2">
-          <widget class="QLabel" name="label_8">
-           <property name="text">
-            <string>内容：</string>
-           </property>
-          </widget>
-         </item>
-         <item row="16" column="2" colspan="2">
-          <widget class="QTextEdit" name="textEdit_Message">
-           <property name="html">
-            <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'SimSun'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;互粉谢谢^_^&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;加个关注呗~&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-           </property>
-          </widget>
-         </item>
-         <item row="17" column="2">
-          <widget class="QCheckBox" name="checkBox_InsertStrAfterMessage">
-           <property name="text">
-            <string>结尾插入随机符长度</string>
-           </property>
-          </widget>
-         </item>
-         <item row="17" column="3">
+         <item row="19" column="3">
           <widget class="QComboBox" name="comboBox_RandomStrLenMessage">
            <item>
             <property name="text">
@@ -476,13 +372,31 @@ p, li { white-space: pre-wrap; }
            </item>
           </widget>
          </item>
-         <item row="18" column="2" colspan="2">
-          <widget class="QLabel" name="label_Counter">
+         <item row="3" column="0">
+          <widget class="QPushButton" name="pushButton_InitDevice">
            <property name="text">
-            <string/>
+            <string>初始化模拟器</string>
            </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
+          </widget>
+         </item>
+         <item row="15" column="0">
+          <widget class="QCheckBox" name="checkBox_AutoComment">
+           <property name="text">
+            <string>自动评论</string>
+           </property>
+          </widget>
+         </item>
+         <item row="14" column="2">
+          <widget class="QLabel" name="label_8">
+           <property name="text">
+            <string>内容：</string>
+           </property>
+          </widget>
+         </item>
+         <item row="19" column="2">
+          <widget class="QCheckBox" name="checkBox_InsertStrAfterMessage">
+           <property name="text">
+            <string>结尾插入随机符长度</string>
            </property>
           </widget>
          </item>
@@ -490,6 +404,108 @@ p, li { white-space: pre-wrap; }
           <widget class="QPushButton" name="pushButton_Run">
            <property name="text">
             <string>开始</string>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="0">
+          <widget class="QLabel" name="label_6">
+           <property name="text">
+            <string>设备列表：</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="2">
+          <widget class="QComboBox" name="comboBox_DeviceList"/>
+         </item>
+         <item row="6" column="2">
+          <widget class="QCheckBox" name="checkBox_RestartDouyin">
+           <property name="text">
+            <string>自动重启抖音</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="0">
+          <widget class="QCheckBox" name="checkBox_AutoInitial">
+           <property name="text">
+            <string>自动初始化</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="3">
+          <widget class="QCheckBox" name="checkBox_EnableMultiDevices">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string>多开</string>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="2">
+          <widget class="QComboBox" name="comboBox_WorkMode">
+           <item>
+            <property name="text">
+             <string>默认模式</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>只刷关注用户</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>只刷附近用户</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="7" column="3">
+          <widget class="QCheckBox" name="checkBox_DownVideo">
+           <property name="text">
+            <string>自动下载视频</string>
+           </property>
+          </widget>
+         </item>
+         <item row="7" column="2">
+          <widget class="QCheckBox" name="checkBox_AutoAddFriend">
+           <property name="text">
+            <string>自动加好友</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="7" column="0">
+          <widget class="QCheckBox" name="checkBox_AutoAwesome">
+           <property name="text">
+            <string>自动点赞</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="3">
+          <widget class="QCheckBox" name="checkBox_Cnt">
+           <property name="text">
+            <string>显示计数</string>
            </property>
           </widget>
          </item>
