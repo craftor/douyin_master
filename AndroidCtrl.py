@@ -120,12 +120,18 @@ class AndroidCtrl():
     def StartEmulator(self):
         # args = '-resolution:800x600'
         args = ''
-        win32api.ShellExecute(0, 'open', str(self.location), args, '', 0)
+        try:
+            win32api.ShellExecute(0, 'open', str(self.location), args, '', 0)
+        except Exception:
+            print("无法启动模拟器")
 
     # 使用ui2操作，第一次要初始化一下设备
     def ui2_InitDevice(self):
         cmd = "tools init"
-        self.SendCommand(cmd)
+        try:
+            self.SendCommand(cmd)
+        except Exception:
+            print("无法初始化设备")
 
     def ui2_ConnectDeviceWiFi(self, ipaddr):
         try:
@@ -151,22 +157,12 @@ class AndroidCtrl():
             self.LogPrint(u"手机无法连接，请检查是否未初始化过")
             return False
 
-    # 连接手机
-    def ui2_ConnectDevice(self):
-        try:
-            self.client = u2.connect_usb("127.0.0.1:62001")
-            # set delay 1.5s after each UI click and click
-            self.client.click_post_delay = 1.0
-            # set default element wait timeout (seconds)
-            self.client.wait_timeout = 5.0
-            return True
-        except Exception:
-            self.LogPrint(u"手机无法连接，请检查是否未初始化过")
-            return False
-
     # 安装APP
     def ui2_InstallAPP(self, appURL):
-        self.client.app_install(appURL)
+        try:
+            self.client.app_install(appURL)
+        except Exception:
+            print("安装失败")
 
     def adb_InstallAPP(self, appURL, device):
         cmd = 'adb -s ' + str(device) + ' install ' + appURL
@@ -209,22 +205,6 @@ class AndroidCtrl():
         self.client(description=u"打开看看").click()
         time.sleep(delaytime)
 
-    # 上滑屏幕
-    def ui2_RollingUpScreen(self):
-        self.client.swipe(0.5, 0.8, 0.5, 0.2, 0.1)
-
-    # 下滑屏幕
-    def ui2_RollingDownScreen(self, step):
-        self.client.swipe(0.5, 0.2, 0.5, 0.8, 0.1)
-
-    def ui2_RollingLeftScreen(self):
-        # self.client.swipe(0.9, 0.4, 0.1, 0.4, 0.2)
-        pass
-
-    def ui2_RollingRightScreen(self):
-        # self.client.swipe(0.1, 0.4, 0.9, 0.4, 0.2)
-        pass
-
     def adb_OpenURL(self, url, device):
         cmd = 'adb -s ' + str(device) + ' shell am start -a android.intent.action.VIEW -d ' + str(url)
         self.SendCommand(cmd)
@@ -235,12 +215,6 @@ class AndroidCtrl():
         cmd = 'adb -s ' + str(device) + ' shell input text ' + str(text)
         self.SendCommand(cmd)
         time.sleep(1)
-
-    # 获取设备列表
-    def adb_GetDevices(self):
-        cmd = 'adb devices'
-        result = self.SendCommand(cmd)
-        print(result)
 
     # 单击操作
     def adb_SingleClick(self, x, y, device):
@@ -297,8 +271,8 @@ class AndroidCtrl():
         self.SendCommand(cmd)
 
     # 获取屏幕尺寸，非常重要
-    def adb_GetScreenSize(self):
-        self.adb_PullScreenShot()
+    def adb_GetScreenSize(self, device):
+        self.adb_PullScreenShot(device)
         img = cv2.imread(self.ScreenShotFileName, 3)
         self.height, self.width = img.shape[:2]
 

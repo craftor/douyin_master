@@ -31,6 +31,9 @@ class Dialog(QDialog, Ui_Dialog):
                             QtCore.Qt.WindowMinimizeButtonHint)
         self.setupUi(self)
 
+        #qss_file = open('psblack.css').read()
+        #self.setStyleSheet(qss_file)
+
         # 在线检测
         self.ServerIP = "http://yinliu.craftor.org:5000"
         self.Online = False
@@ -199,13 +202,13 @@ class Dialog(QDialog, Ui_Dialog):
     # 点赞
     def AwsomeMe(self, douyin, device):
         if (self.checkBox_AutoAwesome.isChecked()):
-            self.LogPrint(u"点个赞")
+            print(str(device) + u"点个赞")
             douyin.adb_AwesomeMe(device)
 
     # 点击+号，加好友
     def AddFriend(self, douyin, device):
         if self.checkBox_AutoAddFriend.isChecked():
-            self.LogPrint(u"加关注")
+            print(str(device) + u"加关注")
             douyin.android.adb_SingleClick(569, 428, device)
 
     # 发私信
@@ -221,25 +224,24 @@ class Dialog(QDialog, Ui_Dialog):
                 pass
             if self.checkBox_InsertStrAfterMessage.isChecked():
                 str_msg_single += douyin.android.RandomStr(strLen)
-            # print(str_msg_single)
-            self.LogPrint(u"屏幕左滑")
+            print(str(device) + u"屏幕左滑")
             douyin.android.adb_RollingLeftScreen(device)
             douyin.android.adb_SingleClick(512, 118, device)
             douyin.android.adb_SingleClick(512, 118, device)
             douyin.adb_Message(str_msg_single, device)
-            self.LogPrint(u"屏幕右滑")
+            print(str(device) + u"屏幕右滑")
             douyin.android.adb_RollingRightScreen(device)
 
     # 下载视频
     def DownVideo(self, douyin, device):
         if (self.checkBox_DownVideo.isChecked()):
-            self.LogPrint(u"保存视频")
+            print(str(device) + u"保存视频")
             douyin.adb_DownVideo(device)
 
     # 评论
     def Comment(self, douyin, device):
         if (self.checkBox_AutoComment.isChecked()):
-            self.LogPrint(u"评论开始")
+            print(str(device) + u"评论开始")
             # 评论中插入随机字符
             strLen = self.comboBox_RandomStrLenComment.currentIndex() + 4
             str_comment = self.textEdit_Comment.toPlainText()
@@ -253,19 +255,19 @@ class Dialog(QDialog, Ui_Dialog):
             if self.checkBox_InsertStrAfterComment.isChecked():
                 str_cmt_single += douyin.android.RandomStr(strLen)
             douyin.adb_Comment(str_cmt_single, device)
-            self.LogPrint(u"评论结束")
+            print(str(device) + u"评论结束")
 
     # 计数
-    def Count(self):
+    def Count(self, device):
         self.cnt = self.cnt + 1
         self.total = self.total + 1
-        msg = u"【已看：" + str(self.cnt) + "个，累计：" + str(self.total) + "个】"
+        msg = str(device) + u"【已看：" + str(self.cnt) + "个，累计：" + str(self.total) + "个】"
         # self.label_Counter.setText(msg)
         if (self.checkBox_Cnt.isChecked()):
             self.LogPrint(msg)
 
     # 随机时间
-    def RandomSleep(self):
+    def RandomSleep(self, device):
         # 看一会儿视频
         if self.comboBox_WatchTime.currentIndex() == 0:
             cnt = random.randint(0, 5)
@@ -275,36 +277,34 @@ class Dialog(QDialog, Ui_Dialog):
             cnt = random.randint(10, 15)
         else:
             cnt = random.randint(5, 10)
-        self.LogPrint(u"再看" + str(cnt) + u"秒")
+        print(str(device) + u"再看" + str(cnt) + u"秒")
         time.sleep(cnt)
 
     # 重启抖音
-    def RestartDouyin(self, douyin):
+    def RestartDouyin(self, douyin, device):
         # 重新启动抖音
         if (self.checkBox_RestartDouyin.isChecked()):
-            self.LogPrint(u"正在重新启动抖音")
+            print(str(device) + u"正在重新启动抖音")
             try:
                 douyin.android.client.app_stop(douyin.android.APP_DOUYIN)
             except Exception:
-                self.LogPrint(u"关闭抖音失败，请尝试重新【初始化模拟器】")
+                print(str(device) + u"关闭抖音失败，请尝试重新【初始化模拟器】")
                 return
             time.sleep(2)
             try:
                 douyin.android.client.app_start(douyin.android.APP_DOUYIN)
             except Exception:
-                self.LogPrint(u"关闭抖音失败，请尝试重新【初始化模拟器】")
+                print(str(device) + u"关闭抖音失败，请尝试重新【初始化模拟器】")
                 return
             time.sleep(10)
-            self.LogPrint(u"启动完成")
+            print(str(device) + u"启动完成")
 
     # 多开使用的线程
     def MultiThread(self, device):
 
         douyin = DouYinCtrl()  # 实例初始化
-        # douyin.android.ui2_InitDevice()  # 设备初始化
         douyin.android.ui2_ConnectDeviceUSB(device)  # 连接设备
-
-        self.RestartDouyin(douyin)
+        self.RestartDouyin(douyin, device)
 
         # 工作模式
         if self.comboBox_WorkMode.currentIndex() == 0:
@@ -328,29 +328,29 @@ class Dialog(QDialog, Ui_Dialog):
             if (douyin.android.client(text="关注").exists):
                 pass
             else:
-                self.LogPrint("好像不在抖音界面")
+                print(str(device) + "好像不在抖音界面")
                 self.RestartDouyin(device)
 
             # 看5秒钟视频，判断是否为广告
-            self.LogPrint("先观察5秒，判断是否为广告")
+            print(str(device) + "先观察5秒，判断是否为广告")
             time.sleep(5)
             if (douyin.android.client(text="立即下载").exists):
-                self.LogPrint(u"==========刷到广告了==========")
+                print(str(device) + u"==========刷到广告了==========")
                 time.sleep(1)
             elif (douyin.android.client(text="查看详情").exists):
-                self.LogPrint(u"==========刷到广告了==========")
+                print(str(device) + u"==========刷到广告了==========")
                 time.sleep(1)
             else:
-                self.RandomSleep()
+                self.RandomSleep(device)
                 self.AwsomeMe(douyin, device)
                 self.AddFriend(douyin, device)
                 self.Message(douyin, device)
                 self.DownVideo(douyin, device)
                 self.Comment(douyin, device)
-                # self.Count()
+                self.Count(device)
 
             # 下一个
-            self.LogPrint(u"下一个抖音")
+            print(str(device) + u"下一个抖音")
             douyin.android.adb_RollingUpScreen(500, device)
 
     # 打印日志
@@ -362,8 +362,6 @@ class Dialog(QDialog, Ui_Dialog):
 
     @pyqtSlot()
     def on_pushButton_Run_clicked(self):
-
-        self.CheckKey()
 
         if (self.tRun):
 
@@ -396,7 +394,7 @@ class Dialog(QDialog, Ui_Dialog):
                 myThread = "myTh" + str(x)
                 myThread = Thread(target=self.MultiThread, args=[device[x]])
                 myThread.start()
-            self.LogPrint(u"*线程已经启动")
+                self.LogPrint(str(device[x]) + u"线程已经启动")
             self.pushButton_Run.setText(u"停止")
 
     @pyqtSlot()

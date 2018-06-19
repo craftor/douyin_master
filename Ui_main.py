@@ -251,7 +251,7 @@ class Ui_Dialog(object):
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "[耐诺网络]抖音大师 v1.3"))
+        Dialog.setWindowTitle(_translate("Dialog", "[耐诺网络]抖音大师 v1.4"))
         self.pushButton_StartEmulator.setText(_translate("Dialog", "启动模拟器"))
         self.label_2.setText(_translate("Dialog", "手机号码"))
         self.pushButton_VisitHome.setText(_translate("Dialog", "官方网站"))
