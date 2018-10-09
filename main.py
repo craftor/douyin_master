@@ -35,14 +35,14 @@ class Dialog(QDialog, Ui_Dialog):
         #self.setStyleSheet(qss_file)
 
         # 在线检测
-        self.ServerIP = "http://yinliu.craftor.org:5000"
-        self.Online = False
+        #self.ServerIP = "http://yinliu.craftor.org:5000"
+        self.Online = True
 
         # 获取新闻
         # self.GetNews()
 
         # license有效标识
-        self.LicenseAvaliabie = False
+        self.LicenseAvaliabie = True
         # 线程
         self.tRun = False
         # 例化实例
@@ -50,7 +50,7 @@ class Dialog(QDialog, Ui_Dialog):
         # 参数初始化
         self.DefaultSetting()
         # 检查序列号
-        self.CheckKey()
+        #self.CheckKey()
         # 计数器
         self.cnt = 0
         self.total = 0
@@ -69,7 +69,12 @@ class Dialog(QDialog, Ui_Dialog):
         # self.label_OnlinePeople.setText(str(self.people))
 
         # For Test
-        self.Test()
+        # self.Test()
+
+        #
+        self.pushButton_BuyKeys.setEnabled(False)
+        self.pushButton_ActKey.setEnabled(False)
+        self.pushButton_LicenseCheck.setEnabled(False)
 
     def RefreshDevcies(self):
         devices = self.douyin.android.GetDeviceList()

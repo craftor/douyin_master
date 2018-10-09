@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'E:\Git\Python\douyinMaster\main.ui'
+# Form implementation generated from reading ui file 'E:\Python\douyinMaster\main.ui'
 #
 # Created by: PyQt5 UI code generator 5.10.1
 #
@@ -246,12 +246,12 @@ class Ui_Dialog(object):
         self.horizontalLayout.addLayout(self.verticalLayout)
 
         self.retranslateUi(Dialog)
-        self.tabWidget.setCurrentIndex(1)
+        self.tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "[耐诺网络]抖音大师 v1.4"))
+        Dialog.setWindowTitle(_translate("Dialog", "[Craftor]抖音大师 v1.4"))
         self.pushButton_StartEmulator.setText(_translate("Dialog", "启动模拟器"))
         self.label_2.setText(_translate("Dialog", "手机号码"))
         self.pushButton_VisitHome.setText(_translate("Dialog", "官方网站"))
@@ -272,7 +272,7 @@ class Ui_Dialog(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:large; font-weight:600;\">官方消息</span></p>\n"
 "<p style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:1; text-indent:0px;\">请认准官方网站为http://douyin.craftor.org</p>\n"
 "<p style=\" margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:large; font-weight:600;\">当前版本</span></p>\n"
-"<ul style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;\"><li style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">v1.3   [2018-05-29]</li>\n"
+"<ul style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;\"><li style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">v1.4   [2018-05-29]</li>\n"
 "<li style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">支持多开</li></ul></body></html>"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("Dialog", "初始化"))
         self.label_5.setText(_translate("Dialog", "每段视频观看时间："))
@@ -332,7 +332,7 @@ class Ui_Dialog(object):
 "</style></head><body style=\" font-family:\'SimSun\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">准备工作：</p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">1、下载、安装【安卓模拟器】</p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">2、运行【安卓模拟器】，设置分辨率为800x600，并开启软键盘，然后重启</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">2、运行【安卓模拟器】，设置分辨率为800x480，并开启软键盘，然后重启</p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">3、在【安卓模拟器】的市场中搜索“抖音”，并进行安装；或在软件中点击【下载抖音】到Windows中，然后再拖拽到安卓模拟器中</p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">4、点击【初始化模拟器】，成功后模拟器中会弹出一个网页，表示安装成功；否则，尝试重启模拟器，再尝试点击</p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">5、初始化模拟器完成后，到【模拟器里的安卓系统中-&gt;设置】中（注意不是模拟器自身的设置），将默认输入法设置为【FastInputIME】，否则无法实现评论和私信</p>\n"
